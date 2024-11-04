@@ -3,14 +3,11 @@ package org.wellnessliving.homework03;
 import org.wellnessliving.homework03.dto.UserRegistrationDto;
 import org.wellnessliving.homework03.dto.UserResponseDto;
 import org.wellnessliving.homework03.repository.UserRepositoryImpl;
-import org.wellnessliving.homework03.service.UserService;
 import org.wellnessliving.homework03.service.UserServiceImpl;
 
 import java.util.Optional;
 
 public class Main {
-    private static final String URL = "jdbc:mysql://localhost:3307/todo";
-
     public static void main(String[] args) {
         UserRepositoryImpl userRepository = new UserRepositoryImpl();
         UserServiceImpl userService = new UserServiceImpl(userRepository);
