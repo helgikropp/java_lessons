@@ -12,7 +12,7 @@ public class UserValidator {
     private static final String ERR_MSG_PASSWORD_LENGTH = "Password length must be at least 8 symbols";
     private static final String ERR_MSG_PASSWORD_MATCH = "Password and repeated password must be identical";
 
-    public static void validate(UserRegistrationDto dto) {
+    public static void validate(UserRegistrationDto dto) throws RuntimeException {
         if (dto.email().isEmpty()) {
             throw new RuntimeException(ERR_MSG_EMAIL_EMPTY);
         }

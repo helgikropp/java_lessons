@@ -17,7 +17,7 @@ public class UserRepositoryImpl implements UserRepository {
     private static final String PHONE = "phone";
 
     @Override
-    public Optional<User> findById(Long id) {
+    public Optional<User> findById(Long id) throws DataException {
         String sqlRequest = "SELECT * FROM users WHERE id = ?";
 
         try (PreparedStatement preparedStatement = DataSource.getConnection().prepareStatement(sqlRequest)) {
@@ -34,7 +34,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> save(User user) {
+    public Optional<User> save(User user) throws DataException {
         String sqlRequest = "INSERT INTO users (email, pwd, phone) VALUES (?, ?, ?)";
 
         try (PreparedStatement preparedStatement = DataSource.getConnection().prepareStatement(
@@ -61,14 +61,14 @@ public class UserRepositoryImpl implements UserRepository {
         return Optional.empty();
     }
 
-    private void checkAffectedRowsNumber(int number) {
+    private void checkAffectedRowsNumber(int number) throws DataException {
         if (number < MIN_AFFECTED_ROWS_COUNT) {
             throw new DataException("Excepted to change at least 1 row. "
                     + "But changed 0 rows.");
         }
     }
 
-    private User resultToUser(ResultSet requestResult) {
+    private User resultToUser(ResultSet requestResult) throws DataException {
         try {
             User user = new User();
             user.setId(requestResult.getObject(ID, Long.class));

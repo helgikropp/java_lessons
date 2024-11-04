@@ -11,7 +11,7 @@ public class DataSource {
     private static final String URL = "jdbc:mysql://localhost:3307/todo";
     private static Connection dboConnection = null;
 
-    public static Connection getConnection() {
+    public static Connection getConnection() throws SQLException, DbException {
         if (dboConnection == null) {
             try {
                 Properties dboProperties = new Properties();
