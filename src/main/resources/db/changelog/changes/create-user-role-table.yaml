@@ -1,0 +1,46 @@
+databaseChangeLog:
+  -  changeSet:
+       id:  create-user-role-table
+       author:  helgikropp
+       changes:
+         -  createTable:
+              columns:
+                -  column:
+                     name:  role_id
+                     type:  bigint
+                     constraints:
+                       nullable: false
+                -  column:
+                     name:  user_id
+                     type:  bigint
+                     constraints:
+                       nullable: false
+              schemaName:  users_hibernate
+              tableName:  user-role
+         -  addForeignKeyConstraint:
+              baseColumnNames:  user_id
+              baseTableName:  user_role
+              constraintName:  fk_user_id
+              onDelete:  CASCADE
+              onUpdate:  RESTRICT
+              referencedColumnNames:  id
+              referencedTableName:  user
+              schemaName:  users_hibernate
+              validate:  true
+         -  addForeignKeyConstraint:
+              baseColumnNames: role_id
+              baseTableName: user_role
+              constraintName: fk_role_id
+              onDelete: CASCADE
+              onUpdate: RESTRICT
+              referencedColumnNames: id
+              referencedTableName: role
+              schemaName:  users_hibernate
+              validate: true
+         -  addUniqueConstraint:
+              clustered: false
+              columnNames: user_id, role_id
+              constraintName: unq_user_role
+              schemaName:  users_hibernate
+              tableName: user_role
+              validate: true
