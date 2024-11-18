@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+
+  java_lessons_db:
+    image: mysql
+    container_name: java_lessons_db
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    command: --default-authentication-plugin=mysql_native_password --init-file /data/application/db_init.sql
+    restart: always
+    ports:
+      - "3307:3306"
+    volumes:
+        - ./db_init.sql:/data/application/db_init.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+
+  java_lessons_adm:
+    image: adminer
+    container_name: java_lessons_adm
+    restart: always
+    ports:
+      - "8081:8080"
+    depends_on:
+        - java_lessons_db
+
+    environment:
+        - TZ=Europe/Kyiv
+    
